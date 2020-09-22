@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>CRUD con VueJS</title>
+</head>
+<body>
+    
+    <div class="container mt-5" id="app">
+
+        <h1>{{ titulo }}</h1> <!-- Obtenemos el titulo dinamico -->
+
+        <!--V-Model hace el link entre nuestro input y la propiedad nuevaTarea-->
+        <!-- @keyup.enter hace que se ejecute la funcion agregarTarea al teclear enter -->
+        <input type="text" class="form-control my-3" v-model='nuevaTarea' @keyup.enter='agregarTarea'>
+        <button class="btn btn-primary" @click='agregarTarea'>Agregar</button>
+
+        <!-- Con v-for recorremos el array de tareas para desplegar un contenedor por cada una de ellas -->
+        <div class="mt-3" v-for='(item, index) of tareas'>
+            <!-- Usamos :class para saber el estado de cada tarea, y asi pintar el color de fondo correspondiente -->
+            <div role="alert" :class="['alert', item.estado ? 'alert-success':'alert-danger']">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        {{index}} - {{item.nombre}} - {{item.estado}}
+                    </div>
+                    <div>
+                        <!-- Con @click llamamos funciones que requieren argumentos, en este caso el index obtenido en el v-for -->
+                        <button class="btn btn-success btn-sm" @click = 'editarTarea(index)'>OK</button>
+                        <button class="btn btn-danger btn-sm" @click = 'eliminarTarea(index)'>X</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
